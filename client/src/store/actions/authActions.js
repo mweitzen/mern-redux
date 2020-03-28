@@ -92,7 +92,7 @@ export const signupUser = ({name, email, password}) => dispatch => {
 }
 
 // Logout User
-export const logoutUser = () => dispatch => ({
+export const logoutUser = () => dispatch => dispatch({
   type: LOGOUT_SUCCESS
 })
 

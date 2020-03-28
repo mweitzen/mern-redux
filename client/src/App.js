@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import { loadUser } from './store/actions/authActions'
+import { loadUser, logoutUser } from './store/actions/authActions'
 
 import BasicAuth from './features/auth/BasicAuth'
 
@@ -11,14 +11,17 @@ class App extends Component {
     this.props.actions.loadUser();
   }
   render() {
-    const { auth } = this.props;
+    const { auth, actions } = this.props;
     return (
       <div className='App'>
         {
           auth.isLoading ?
             <p style={{textAlign: 'center'}}>"Loading..."</p>
             : ( auth.isAuthenticated ?
-                "Authorized"
+                <div style={{textAlign: 'center'}}>
+                  <p>"Authorized"</p>
+                  <button onClick={() => actions.logoutUser()}>Logout</button>
+                </div>
               : <div>
                   <p style={{textAlign: 'center'}}>Build your fucking shit bro</p>
                   <BasicAuth />
@@ -35,7 +38,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({loadUser}, dispatch)
+  actions: bindActionCreators({loadUser, logoutUser}, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
